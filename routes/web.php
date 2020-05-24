@@ -19,8 +19,6 @@ Route::get('/about', 'StaticPagesController@about')->name('about');
 
 //注册
 Route::get('sigup','UserController@create')->name('sigup');
-
-
 Route::resource('users','UserController');
 //等于
 //Route::get('/users','UsersController@index')->name('users.index');
@@ -35,3 +33,6 @@ Route::resource('users','UserController');
 Route::get('login','SessionsController@create')->name('login');
 Route::post('login','SessionsController@store')->name('login');
 Route::delete('logout','SessionsController@destroy')->name('logout');
+
+//邮箱激活账号
+Route::get('signup/confirm/{token}', 'UserController@confirmEmail')->name('confirm_email');

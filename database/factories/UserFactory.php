@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 |
 */
 
+//模型工厂
 $factory->define(User::class, function (Faker $faker) {
     $date_time = $faker->date . ' ' . $faker->time;
     return [
@@ -26,6 +27,7 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'remember_token' => Str::random(10),
         'created_at' => $date_time,
+        'activated' => true
         'updated_at' => $date_time,
     ];
 });
