@@ -11,7 +11,7 @@ class UserController extends Controller
 	// 除了'show','create','store'，其他只能登录过后才能访问
 	public function __construct(){
 		$this->middleware('auth',[
-			'except' => ['show','create','store']
+			'except' => ['show','create','store','index']
 		]);
 
 
@@ -21,6 +21,12 @@ class UserController extends Controller
 		$this->middleware('guest',[
 			'only'=>['create'],
 		]);
+	}
+
+	//用户列表
+	public function index(){
+		$users=User::paginate(10);
+		return view('users.index',compact('users'));
 	}
 
 	//注册页面
