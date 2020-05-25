@@ -30,7 +30,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
+    //邮箱验证令牌验证
     public static function boot(){
         parent::boot();
 
@@ -58,5 +58,10 @@ class User extends Authenticatable
     //定义用户和文章的关联
     public function statuses(){
         return $this->hasMany(Status::class);
+    }
+
+    //调取该用户的文章，按照时间倒序排列
+    public function feed(){
+        return $this->statuses()->orderBy('created_at','desc');
     }
 }
