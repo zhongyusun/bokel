@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+       
     ];
 
     /**
@@ -21,6 +21,8 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    
+    //授权策略自动识别
     public function boot()
     {
         $this->registerPolicies();
