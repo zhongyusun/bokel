@@ -68,11 +68,12 @@ class User extends Authenticatable
     //多对多
     //用户和粉丝关联
     //自定义表名followers
+    //获取粉丝列表
     public function followers(){
        return $this->belongsToMany(User::Class, 'followers', 'user_id', 'follower_id');
     }
 
-    //通过 followers 来获取粉丝关系列表
+    //通过 followers 来获取关注列表
      public function followings()
     {
         return $this->belongsToMany(User::Class, 'followers', 'follower_id', 'user_id');

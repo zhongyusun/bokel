@@ -15,6 +15,9 @@
         <section class="user_info">
           @include('shared._user_info', ['user' => Auth::user()])
         </section>
+        <section class="stats mt-2">
+          @include('shared._stats', ['user' => Auth::user()])
+        </section>
       </aside>
     </div>
   @else
@@ -27,7 +30,7 @@
         一切，将从这里开始。
       </p>
       <p>
-        <a class="btn btn-lg btn-success" href="{{ route('sigup') }}" role="button">现在注册</a>
+        <a class="btn btn-lg btn-success" href="{{ route('signup') }}" role="button">现在注册</a>
       </p>
     </div>
   @endif
