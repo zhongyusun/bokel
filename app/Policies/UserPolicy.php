@@ -22,6 +22,12 @@ class UserPolicy
     }
 
 
+    //用户关注策略
+    public function follow(User $currentUser,User $user){
+        return $currentUser->id !== $user->id;
+    }
+
+
 
     /**
      * Create a new policy instance.
