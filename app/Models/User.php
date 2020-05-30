@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -60,9 +61,19 @@ class User extends Authenticatable
         return $this->hasMany(Status::class);
     }
 
-    //调取该用户的文章，按照时间倒序排列
+    //    调取该用户的文章，按照时间倒序排列
+    //动态流首页显示时时动态
     public function feed(){
-        return $this->statuses()->orderBy('created_at','desc');
+        //获取当前登录的人的关注的人的id合计
+        //还有一点需要注意的是 $user->followings 与 $user->followings() 调用时返回的数据是不一样的， $user->followings 返回的是 Eloquent：集合 。而 $user->followings() 返回的是 数据库请求构建器 ，可以简单理解为 followings 返回的是数据集合，而 followings() 返回的是数据库查询语句
+        $user_ids=$this->followings->pluck('id')->toArray();
+        //将当前登录的人的id放入该合集中
+        //使用 Laravel 提供的 查询构造器 whereIn 方法取出所有用户的微博动态并进行倒序排序；
+//我们使用了 Eloquent 关联的 预加载 with 方法，预加载避免了 N+1 查找的问题，大大提高了查询效率。N+1 问题 的例子可以阅读此文档 Eloquent 模型关系预加载 。
+        array_push($user_ids, $this->id);
+        return Status::whereIn('user_id', $user_ids)
+                              ->with('user')
+                              ->orderBy('created_at', 'desc');
     }
 
     //多对多
